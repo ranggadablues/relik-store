@@ -1,4 +1,4 @@
-import { PaymentFormInputs, paymentFormSchema } from "@/types";
+import { CartItemsType, PaymentFormInputs, paymentFormSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ShoppingCart } from "lucide-react";
@@ -7,16 +7,28 @@ import Image from "next/image";
 import { Label } from "./ui/label";
 import { Input } from "./ui/Input";
 import { Button } from "./ui/button";
+import { useEffect } from "react";
 
-const PaymentForm = () => {
-    
-    const {register, handleSubmit, formState: {errors}} = useForm<PaymentFormInputs>({
+const PaymentForm = ({ cart }: { cart: CartItemsType }) => {
+
+    const { register, handleSubmit, formState: { errors } } = useForm<PaymentFormInputs>({
         resolver: zodResolver(paymentFormSchema),
     })
     const router = useRouter()
-    const handlePaymentForm:SubmitHandler<PaymentFormInputs> = () => {
+    const handlePaymentForm: SubmitHandler<PaymentFormInputs> = () => {
         router.push("/cart?step=confirmation", { scroll: false })
     }
+
+    useEffect(() => {
+        if (cart.length === 0) {
+            router.push("/")
+        }
+    }, [cart, router])
+
+    if (cart.length === 0) {
+        return null
+    }
+
     return (
         <form className="space-y-6 bg-zinc-800 border border-zinc-700 p-6 md:p-8" onSubmit={handleSubmit(handlePaymentForm)}>
             {/* Name */}

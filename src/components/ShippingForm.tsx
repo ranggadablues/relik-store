@@ -1,4 +1,5 @@
-import { ShippingFormInputs, shippingFormSchema } from "@/types";
+import { useEffect } from "react";
+import { CartItemsType, ShippingFormInputs, shippingFormSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ArrowRight } from "lucide-react";
@@ -7,7 +8,7 @@ import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/Input";
 
-const ShippingForm = ({ setShippingForm }: { setShippingForm: (data: ShippingFormInputs) => void }) => {
+const ShippingForm = ({ setShippingForm, cart }: { setShippingForm: (data: ShippingFormInputs) => void, cart: CartItemsType }) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<ShippingFormInputs>({
         resolver: zodResolver(shippingFormSchema),
@@ -16,6 +17,16 @@ const ShippingForm = ({ setShippingForm }: { setShippingForm: (data: ShippingFor
     const handleShippingForm: SubmitHandler<ShippingFormInputs> = (data: ShippingFormInputs) => {
         setShippingForm(data)
         router.push("/cart?step=3", { scroll: false })
+    }
+
+    useEffect(() => {
+        if (cart.length === 0) {
+            router.push("/")
+        }
+    }, [cart, router])
+
+    if (cart.length === 0) {
+        return null
     }
     return (
         <form className="space-y-6 bg-zinc-800 border border-zinc-700 p-6 md:p-8" onSubmit={handleSubmit(handleShippingForm)}>

@@ -1,5 +1,5 @@
 {
-  "name": "lastlegends-store",
+  "name": "relik-store",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,11 +15,12 @@
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.562.0",
-    "next": "16.1.1",
+    "motion": "^12.31.0",
+    "next": "^16.4.0",
     "next-themes": "^0.4.6",
     "radix-ui": "^1.4.3",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "react-hook-form": "^7.69.0",
     "react-resizable-panels": "^3.0.6",
     "react-toastify": "^11.0.5",
@@ -35,7 +36,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.1.1",
+    "eslint-config-next": "^16.4.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

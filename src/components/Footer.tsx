@@ -23,28 +23,28 @@ const Footer = () => {
                         </p>
                         <div className="flex gap-4 pt-2">
                             <Link
-                                href="https://www.instagram.com/lastlegends/"
+                                href="https://www.instagram.com/relik/"
                                 className="text-gray-400 hover:text-red-600 transition-colors"
                                 aria-label="Instagram"
                             >
                                 <Instagram className="h-5 w-5" />
                             </Link>
                             <Link
-                                href="https://www.facebook.com/lastlegends/"
+                                href="https://www.facebook.com/relik/"
                                 className="text-gray-400 hover:text-red-600 transition-colors"
                                 aria-label="Facebook"
                             >
                                 <Facebook className="h-5 w-5" />
                             </Link>
                             <Link
-                                href="https://www.twitter.com/lastlegends/"
+                                href="https://www.twitter.com/relik/"
                                 className="text-gray-400 hover:text-red-600 transition-colors"
                                 aria-label="Twitter"
                             >
                                 <Twitter className="h-5 w-5" />
                             </Link>
                             <Link
-                                href="https://www.youtube.com/lastlegends/"
+                                href="https://www.youtube.com/relik/"
                                 className="text-gray-400 hover:text-red-600 transition-colors"
                                 aria-label="YouTube"
                             >
@@ -135,7 +135,7 @@ const Footer = () => {
                 <div className="container mx-auto px-4 py-6">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
                         <p className="uppercase tracking-wide">
-                            © 2025 LastLegends. All Rights Reserved.
+                            © 2025 Relik. All Rights Reserved.
                         </p>
                         <div className="flex gap-6 uppercase tracking-wide">
                             <Link href="/" className="hover:text-red-600 transition-colors">

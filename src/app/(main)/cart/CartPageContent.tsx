@@ -9,7 +9,7 @@ import { ShippingFormInputs } from "@/types"
 import { ArrowRight, Minus, Plus, X } from "lucide-react"
 import Image from "next/image"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const steps = [
     {
@@ -37,6 +37,109 @@ const CartPage = () => {
     const activeStep = Number.parseInt(searchParams.get("step") || "1");
 
     const { cart, removeFromCart } = useCartStore();
+
+    useEffect(() => {
+        if (activeStep === 3 && !shippingForm) {
+            router.push("/")
+        }
+    }, [activeStep, shippingForm, router])
+
+    const renderCartContent = () => {
+        if (activeStep === 1) {
+            if (cart.length === 0) {
+                return (
+                    <div className="bg-zinc-800 border border-zinc-700 p-4">
+                        <p className="text-sm text-gray-500">Your cart is empty.</p>
+                    </div>
+                )
+            }
+            return cart.map((item) => (
+                <div
+                    key={item.id + item.selectedSize + item.selectedColor}
+                    className="bg-zinc-800 border border-zinc-700 p-4"
+                >
+                    <div className="flex gap-4">
+                        {/* Product Image */}
+                        <div className="w-24 h-24 flex-shrink-0 bg-zinc-900">
+                            <Image
+                                src={item.images[item.selectedColor]}
+                                alt={item.name}
+                                width={100}
+                                height={100}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+
+                        {/* Product Details */}
+                        <div className="flex-1">
+                            <div className="flex justify-between items-start mb-2">
+                                <div>
+                                    <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                                        {item.band}
+                                    </p>
+                                    <h3 className="text-white uppercase tracking-wide">
+                                        {item.name}
+                                    </h3>
+                                    <p className="text-sm text-gray-400 mt-1">
+                                        Size: <span className="text-white">{item.selectedSize}</span>
+                                    </p>
+                                </div>
+                                <Button
+                                    onClick={() => removeFromCart(item)}
+                                    variant="ghost"
+                                    size="icon"
+                                    className="text-gray-400 hover:text-red-600 hover:bg-transparent -mt-2 -mr-2 cursor-pointer"
+                                >
+                                    <X className="h-4 w-4" />
+                                </Button>
+                            </div>
+
+                            <div className="flex justify-between items-center mt-4">
+                                {/* Quantity Controls */}
+                                <div className="flex items-center gap-2 border border-zinc-700 bg-zinc-900">
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-8 w-8 text-gray-400 hover:text-white hover:bg-zinc-800 cursor-pointer"
+                                    >
+                                        <Minus className="h-3 w-3" />
+                                    </Button>
+                                    <span className="text-white w-8 text-center">
+                                        {item.quantity}
+                                    </span>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-8 w-8 text-gray-400 hover:text-white hover:bg-zinc-800 cursor-pointer"
+                                    >
+                                        <Plus className="h-3 w-3" />
+                                    </Button>
+                                </div>
+
+                                {/* Price */}
+                                <div className="text-xl text-white">
+                                    IDR {(item.price * item.quantity).toFixed(2)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))
+        }
+
+        if (activeStep === 2) {
+            return <ShippingForm cart={cart} setShippingForm={setShippingForm} />
+        }
+
+        if (activeStep === 3 && shippingForm) {
+            return <PaymentForm cart={cart} />
+        }
+
+        return (
+            <p className="text-sm text-gray-500">Please fill in the shipping form to continue.</p>
+        )
+    }
+
     return (
         <div className="bg-zinc-900 min-h-screen py-8">
             <div className="container mx-auto px-4">
@@ -82,91 +185,7 @@ const CartPage = () => {
 
                     {/* Cart Items */}
                     <div className="lg:col-span-2 space-y-4">
-                        {activeStep === 1 ? 
-                            cart.length == 0 ? (
-                                <div className="bg-zinc-800 border border-zinc-700 p-4">
-                                    <p className="text-sm text-gray-500">Your cart is empty.</p>
-                                </div>
-                            ) : (
-                            cart.map((item) => (
-                                <div
-                                    key={item.id+item.selectedSize+item.selectedColor}
-                                    className="bg-zinc-800 border border-zinc-700 p-4"
-                                >
-                                    <div className="flex gap-4">
-                                        {/* Product Image */}
-                                        <div className="w-24 h-24 flex-shrink-0 bg-zinc-900">
-                                            <Image
-                                                src={item.images[item.selectedColor]}
-                                                alt={item.name}
-                                                width={100}
-                                                height={100}
-                                                className="w-full h-full object-cover"
-                                            />
-                                        </div>
-
-                                        {/* Product Details */}
-                                        <div className="flex-1">
-                                            <div className="flex justify-between items-start mb-2">
-                                                <div>
-                                                    <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
-                                                        {item.band}
-                                                    </p>
-                                                    <h3 className="text-white uppercase tracking-wide">
-                                                        {item.name}
-                                                    </h3>
-                                                    <p className="text-sm text-gray-400 mt-1">
-                                                        Size: <span className="text-white">{item.selectedSize}</span>
-                                                    </p>
-                                                </div>
-                                                <Button
-                                                    onClick={() => removeFromCart(item)}
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    className="text-gray-400 hover:text-red-600 hover:bg-transparent -mt-2 -mr-2 cursor-pointer"
-                                                >
-                                                    <X className="h-4 w-4" />
-                                                </Button>
-                                            </div>
-
-                                            <div className="flex justify-between items-center mt-4">
-                                                {/* Quantity Controls */}
-                                                <div className="flex items-center gap-2 border border-zinc-700 bg-zinc-900">
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        className="h-8 w-8 text-gray-400 hover:text-white hover:bg-zinc-800 cursor-pointer"
-                                                    >
-                                                        <Minus className="h-3 w-3" />
-                                                    </Button>
-                                                    <span className="text-white w-8 text-center">
-                                                        {item.quantity}
-                                                    </span>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        className="h-8 w-8 text-gray-400 hover:text-white hover:bg-zinc-800 cursor-pointer"
-                                                    >
-                                                        <Plus className="h-3 w-3" />
-                                                    </Button>
-                                                </div>
-
-                                                {/* Price */}
-                                                <div className="text-xl text-white">
-                                                    IDR {(item.price * item.quantity).toFixed(2)}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        ) : activeStep === 2 ? (
-                            <ShippingForm setShippingForm={setShippingForm} />
-                        ) : activeStep === 3 && shippingForm ? (
-                            <PaymentForm />
-                        ) : (
-                            <p className="text-sm text-gray-500">Please fill in the shipping form to continue.</p>
-                        )}
+                        {renderCartContent()}
                     </div>
 
                     {/* Cart Summary */}
@@ -219,6 +238,7 @@ const CartPage = () => {
 
                             {activeStep === 1 && <Button onClick={() => router.push("/cart?step=2", { scroll: false })}
                                 className="w-full mt-6 bg-red-600 hover:bg-red-700 text-white uppercase tracking-wider py-6 cursor-pointer"
+                                disabled={cart.length === 0}
                             >
                                 Continue <ArrowRight className="w-3 h-3" />
                             </Button>}

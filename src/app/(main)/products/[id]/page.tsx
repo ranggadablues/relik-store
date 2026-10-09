@@ -10,7 +10,7 @@ export const generateMetadata = async ({
     const { id } = await params;
     const product = await getProduct(id);
     return {
-        title: `${product?.name} - LastLegends`,
+        title: `${product?.name} - Relik`,
         description: product?.description,
     };
 };

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "LastLegends - Sign In",
+    title: "Relik - Sign In",
     description: "Authentic vintage band tees from the golden era of rock, grunge, and alternative",
 };
 
