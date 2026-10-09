@@ -1,5 +1,5 @@
 import { ToastContainer } from "react-toastify";
-
+import "@/styles/globals.css";
 export default function RootLayout({
     children,
 }: {

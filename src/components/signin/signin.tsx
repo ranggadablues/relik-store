@@ -1,9 +1,11 @@
 "use client"
 
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import GoogleSignIn from './auth/google';
+import FacebookLoginButton from './auth/facebook';
 
 export function SignIn() {
     const [showPassword, setShowPassword] = useState(false);
@@ -18,13 +20,20 @@ export function SignIn() {
 
     return (
         <div className="min-h-screen bg-black flex">
+            <Link
+                href="/"
+                className="fixed top-8 left-8 z-50 flex items-center gap-2 text-gray-400 hover:text-red-600 transition-colors group"
+            >
+                <ArrowLeft className="w-5 h-5" />
+                <span className="uppercase tracking-wider text-sm">Back to Home</span>
+            </Link>
             {/* Left Side - Sign In Form */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
                 <div className="w-full max-w-md">
                     {/* Logo & Brand */}
                     <div className="flex flex-col items-center mb-10">
                         <Link href="/" className="flex items-center">
-                            <Image src="/last-legends-logo.png" alt="LastLegends" width={500} height={500} className="h-20 w-auto mb-2" />
+                            <Image src="/last-legends-logo.png" alt="Last Legends Logo" width={500} height={500} className="h-20 w-auto mb-2" />
                         </Link>
                         <div className="w-16 h-1 bg-red-600" />
                     </div>
@@ -43,12 +52,13 @@ export function SignIn() {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Email Input */}
                         <div>
-                            <label className="block text-gray-400 uppercase tracking-wider text-sm mb-2">
+                            <label htmlFor="email" className="block text-gray-400 uppercase tracking-wider text-sm mb-2">
                                 Email Address
                             </label>
                             <div className="relative">
                                 <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
                                 <input
+                                    id="email"
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
@@ -61,12 +71,13 @@ export function SignIn() {
 
                         {/* Password Input */}
                         <div>
-                            <label className="block text-gray-400 uppercase tracking-wider text-sm mb-2">
+                            <label htmlFor="password" className="block text-gray-400 uppercase tracking-wider text-sm mb-2">
                                 Password
                             </label>
                             <div className="relative">
                                 <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
                                 <input
+                                    id="password"
                                     type={showPassword ? 'text' : 'password'}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -99,9 +110,9 @@ export function SignIn() {
                                     Remember Me
                                 </span>
                             </label>
-                            <a href="#" className="text-red-600 hover:text-red-500 text-sm uppercase tracking-wide transition-colors">
+                            <Link href="#" className="text-red-600 hover:text-red-500 text-sm uppercase tracking-wide transition-colors">
                                 Forgot Password?
-                            </a>
+                            </Link>
                         </div>
 
                         {/* Sign In Button */}
@@ -126,18 +137,8 @@ export function SignIn() {
 
                         {/* Social Sign In */}
                         <div className="grid grid-cols-2 gap-4">
-                            <button
-                                type="button"
-                                className="bg-zinc-900 border border-zinc-700 text-gray-300 py-3 uppercase tracking-wide hover:border-red-600 hover:text-white transition-all duration-300"
-                            >
-                                Google
-                            </button>
-                            <button
-                                type="button"
-                                className="bg-zinc-900 border border-zinc-700 text-gray-300 py-3 uppercase tracking-wide hover:border-red-600 hover:text-white transition-all duration-300"
-                            >
-                                Facebook
-                            </button>
+                            <GoogleSignIn />
+                            <FacebookLoginButton />
                         </div>
 
                         {/* Sign Up Link */}
@@ -145,9 +146,9 @@ export function SignIn() {
                             <p className="text-gray-400 mb-2">
                                 Don&apos;t have an account?
                             </p>
-                            <a href="#" className="text-red-600 hover:text-red-500 uppercase tracking-wider transition-colors">
+                            <Link href="/createaccount" className="text-red-600 hover:text-red-500 uppercase tracking-wider transition-colors">
                                 Create Account
-                            </a>
+                            </Link>
                         </div>
                     </form>
 

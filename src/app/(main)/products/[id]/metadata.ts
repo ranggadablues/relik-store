@@ -1,5 +1,5 @@
 import { ProductType } from "@/types"
-import { api, ApiResponse } from "@/lib/api"
+import { serverApi, ApiResponse } from "@/lib/api/server"
 
 type GetProductResponse = {
     product: ProductType;
@@ -7,7 +7,7 @@ type GetProductResponse = {
 
 // const products: ProductsType = productsData
 export async function getProduct(id: string | number): Promise<ProductType | undefined> {
-    const res = await api.get<ApiResponse<GetProductResponse>>(`/products/${id}`);
+    const res = await serverApi.get<ApiResponse<GetProductResponse>>(`/products/${id}`);
     if (!res.success) {
         throw new Error("Failed to fetch products");
     }

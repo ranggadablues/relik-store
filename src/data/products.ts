@@ -1,0 +1,311 @@
+export type Product = {
+    id: number
+    name: string
+    tag: string
+    price: number
+    badge: string | null
+    img: string
+    imgs: string[]
+    desc: string
+    longDesc: string
+    sizes: string[]
+    material: string
+    weight: string
+    care: string[]
+    stock: number
+    rating: number
+    reviewCount: number
+}
+
+export const ALL_PRODUCTS: Product[] = [
+    {
+        id: 1,
+        name: 'Bomber Archive 94',
+        tag: 'Outerwear',
+        price: 890000,
+        badge: 'TERLARIS',
+        img: 'https://images.unsplash.com/photo-1538751252895-baf363358ff7?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1538751252895-baf363358ff7?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1586583903558-bf4ae02b9f29?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1632931062340-efbc3fb7760f?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Bomber dengan patch bordir eksklusif. Setiap jahitan bercerita tentang jalanan.',
+        longDesc: 'Bomber Archive 94 adalah reinterpretasi dari jaket bomber ikonik era 90an. Dibuat dari bahan nylon taslan premium dengan lapisan polar fleece di dalam, jaket ini memberikan kehangatan tanpa mengorbankan gaya. Patch bordir eksklusif di dada dan punggung dikerjakan dengan tangan menggunakan benang rayon berkualitas tinggi. Setiap detail — dari rib collar hingga zip puller berlabel RELIK — dipilih dengan cermat untuk menangkap esensi autentik dekade paling jujur dalam sejarah streetwear.',
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        material: 'Shell: 100% Nylon Taslan. Lining: 100% Polar Fleece.',
+        weight: '680g',
+        care: ['Cuci tangan atau mesin dengan air dingin', 'Jangan diperas terlalu keras', 'Jemur di tempat teduh', 'Setrika suhu rendah'],
+        stock: 18,
+        rating: 4.8,
+        reviewCount: 142,
+    },
+    {
+        id: 2,
+        name: 'Kaos Tape Side B',
+        tag: 'Tops',
+        price: 320000,
+        badge: null,
+        img: 'https://images.unsplash.com/photo-1612739980319-3d70ac237feb?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1612739980319-3d70ac237feb?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1596172327838-7938f49840c3?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1629253032541-75d722c73e55?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Grafis kaset klasik. 100% katun combed 30s.',
+        longDesc: 'Kaos Tape Side B adalah tribute kami untuk sisi lain dari kaset — tempat di mana lagu-lagu terbaik tersembunyi. Dibuat dari katun combed 30s single jersey berkualitas premium, kaos ini memiliki bobot ideal yang tidak terlalu tipis dan tidak terlalu berat. Grafis sablon pigment di dada depan menggunakan teknik water-based yang ramah lingkungan dan tahan lama. Tersedia dalam potongan regular fit yang nyaman sepanjang hari.',
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        material: '100% Cotton Combed 30s Single Jersey.',
+        weight: '210g',
+        care: ['Cuci tangan atau mesin suhu maks 30°C', 'Pisahkan dari pakaian warna gelap saat pertama dicuci', 'Jemur terbalik agar warna terjaga', 'Setrika bagian dalam'],
+        stock: 56,
+        rating: 4.6,
+        reviewCount: 89,
+    },
+    {
+        id: 3,
+        name: 'Jaket Denim Rewind',
+        tag: 'Outerwear',
+        price: 750000,
+        badge: 'NEW',
+        img: 'https://images.unsplash.com/photo-1579531936377-b29525a21d63?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1579531936377-b29525a21d63?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1577578948325-47f515220715?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1603771550812-565b86db5341?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Denim washed vintage, fading alami setiap pemakaian.',
+        longDesc: 'Jaket Denim Rewind menggunakan denim 12oz yang telah melalui proses stone-wash dan enzyme-wash untuk menghasilkan tampilan vintage yang autentik. Semakin sering dipakai, semakin unik karakternya — fading alami pada area siku, kerah, dan saku memberikan kepribadian yang tidak bisa ditiru. Jahitan kontrast kuning di seluruh panel menegaskan warisan workwear yang menjadi akar streetwear modern.',
+        sizes: ['S', 'M', 'L', 'XL'],
+        material: '100% Cotton Denim 12oz, Stone & Enzyme Washed.',
+        weight: '780g',
+        care: ['Cuci sesedikit mungkin untuk menjaga karakter', 'Cuci terbalik dengan air dingin', 'Jangan gunakan pemutih', 'Jemur di tempat teduh'],
+        stock: 24,
+        rating: 4.7,
+        reviewCount: 63,
+    },
+    {
+        id: 4,
+        name: 'Celana Baggy Relik',
+        tag: 'Bottoms',
+        price: 560000,
+        badge: null,
+        img: 'https://images.unsplash.com/photo-1729622899768-5e3cb76cfae3?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1729622899768-5e3cb76cfae3?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1711483501070-dda8da14a604?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1660936764409-4da65828b4f8?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Potongan longgar era 90an. Nyaman, autentik, ikonik.',
+        longDesc: 'Celana Baggy Relik adalah jawaban kami untuk nostalgia potongan lebar yang mendominasi jalanan era 90an. Menggunakan twill cotton 240gsm yang kuat namun breathable, celana ini memiliki rise tinggi, paha lebar, dan tapering sedikit di kaki untuk siluet yang balance. Dua saku depan, dua saku belakang bertutup, dan satu saku koin kecil — fungsional seperti seharusnya celana jalanan.',
+        sizes: ['28', '30', '32', '34', '36'],
+        material: '100% Cotton Twill 240gsm.',
+        weight: '520g',
+        care: ['Cuci mesin dengan air dingin', 'Setrika sedang', 'Jangan dry clean'],
+        stock: 31,
+        rating: 4.5,
+        reviewCount: 77,
+    },
+    {
+        id: 5,
+        name: 'Hoodie Street Archive',
+        tag: 'Tops',
+        price: 480000,
+        badge: null,
+        img: 'https://images.unsplash.com/photo-1630590613173-b01fdb40a1eb?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1630590613173-b01fdb40a1eb?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1689044611227-3267fabaf76a?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Fleece tebal 380gsm. Logo bordir depan-belakang.',
+        longDesc: 'Hoodie Street Archive dibuat dari french terry 380gsm yang terasa berat dan hangat di tangan — bukan hoodie tipis yang luntur setelah dua kali cuci. Logo RELIK dibordir di dada kiri dan punggung penuh menggunakan teknik flat embroidery dengan benang polyester sheen. Kangaroo pocket besar, drawstring flat, dan ribbed hem yang pas menjadikan hoodie ini klasik tanpa terasa kuno.',
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        material: '80% Cotton, 20% Polyester French Terry 380gsm.',
+        weight: '650g',
+        care: ['Cuci mesin dingin, terbalik', 'Jangan diperas berlebihan', 'Jemur datar agar tidak melar'],
+        stock: 40,
+        rating: 4.9,
+        reviewCount: 211,
+    },
+    {
+        id: 6,
+        name: 'Topi Snapback 94',
+        tag: 'Aksesoris',
+        price: 185000,
+        badge: null,
+        img: 'https://images.unsplash.com/photo-1629252982687-ed3b4c90d994?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1629252982687-ed3b4c90d994?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1629253455812-60e40309699c?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Snapback 6 panel dengan emblem RELIK.',
+        longDesc: 'Topi Snapback 94 adalah salah satu item paling ikonik di lini RELIK. Konstruksi 6 panel dari twill washed memberikan tampilan vintage yang tidak berlebihan. Emblem RELIK di bagian depan dikerjakan dengan teknik 3D puff embroidery untuk dimensi yang terasa premium. Sweatband cotton di bagian dalam dan snapback plastik di belakang menjamin kenyamanan seharian.',
+        sizes: ['One Size'],
+        material: '100% Cotton Twill Washed.',
+        weight: '115g',
+        care: ['Cuci tangan, jangan masukkan mesin', 'Jangan kena matahari langsung saat basah', 'Simpan dengan menjaga bentuk crown'],
+        stock: 72,
+        rating: 4.4,
+        reviewCount: 55,
+    },
+    {
+        id: 7,
+        name: 'Varsity Jacket Kasur',
+        tag: 'Outerwear',
+        price: 1100000,
+        badge: 'LIMITED',
+        img: 'https://images.unsplash.com/photo-1586583903558-bf4ae02b9f29?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1586583903558-bf4ae02b9f29?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1632931062340-efbc3fb7760f?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Varsity wool blend. Edisi terbatas, 50 pcs saja.',
+        longDesc: 'Varsity Jacket Kasur adalah puncak dari koleksi RELIK — dibuat hanya 50 pcs dengan nomor seri individual di bagian label dalam. Body menggunakan wool blend 60/40 berwarna krem gading, sedangkan sleeve menggunakan genuine leather berwarna cognac yang akan mengembangkan patina indah seiring waktu. Chenille letter "R" berukuran besar di dada kiri dan angka "94" di lengan adalah tanda pengenal yang tidak bisa salah.',
+        sizes: ['S', 'M', 'L', 'XL'],
+        material: 'Body: 60% Wool, 40% Acrylic. Sleeve: Genuine Cowhide Leather.',
+        weight: '1.1kg',
+        care: ['Dry clean only', 'Leather sleeve: lap dengan kain lembap, kondisioner kulit 3 bulan sekali', 'Simpan di hanger, jangan dilipat'],
+        stock: 7,
+        rating: 5.0,
+        reviewCount: 28,
+    },
+    {
+        id: 8,
+        name: 'Kaos Longsleeve Relik',
+        tag: 'Tops',
+        price: 295000,
+        badge: null,
+        img: 'https://images.unsplash.com/photo-1604197014426-2de110c7ca00?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1604197014426-2de110c7ca00?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1629253450979-6350ecfb4166?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Lengan panjang ribbed. Grafis vintage print.',
+        longDesc: 'Kaos Longsleeve Relik menggunakan katun combed 30s dengan konstruksi tubular untuk meminimalkan jahitan samping. Cuff ribbed 2x2 di ujung lengan memberikan tampilan rapi sekaligus kenyamanan layering. Grafis sablon discharge di dada depan menghasilkan efek vintage yang terasa menyatu dengan kain — bukan menempel di atasnya.',
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        material: '100% Cotton Combed 30s Tubular.',
+        weight: '280g',
+        care: ['Cuci terbalik suhu dingin', 'Jangan gunakan pelembut kain berlebihan', 'Setrika suhu rendah dari bagian dalam'],
+        stock: 44,
+        rating: 4.5,
+        reviewCount: 38,
+    },
+    {
+        id: 9,
+        name: 'Cargo Pants Walkman',
+        tag: 'Bottoms',
+        price: 620000,
+        badge: 'NEW',
+        img: 'https://images.unsplash.com/photo-1711483501070-dda8da14a604?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1711483501070-dda8da14a604?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1729622899768-5e3cb76cfae3?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Cargo 6-pocket. Canvas ripstop tahan lama.',
+        longDesc: 'Cargo Pants Walkman dinamai dari salah satu benda paling ikonik era 90an — dan memang dirancang untuk memuat satu. Enam saku fungsional termasuk dua saku cargo besar di paha dengan velcro dan snap button. Material canvas ripstop 280gsm yang digunakan militer terkenal anti-robek dan tahan lama. Drawstring di pinggang memberikan penyesuaian fit yang sempurna.',
+        sizes: ['28', '30', '32', '34', '36'],
+        material: '100% Cotton Canvas Ripstop 280gsm.',
+        weight: '600g',
+        care: ['Cuci mesin dingin', 'Tutup semua velcro sebelum mencuci', 'Jangan dry clean'],
+        stock: 19,
+        rating: 4.7,
+        reviewCount: 51,
+    },
+    {
+        id: 10,
+        name: 'Totebag Kaset B-Side',
+        tag: 'Aksesoris',
+        price: 120000,
+        badge: null,
+        img: 'https://images.unsplash.com/photo-1662321190346-7c53909aff28?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1662321190346-7c53909aff28?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1629253463418-d13efa2256de?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Canvas 12oz. Sablon satu sisi, motif kaset.',
+        longDesc: 'Totebag Kaset B-Side terbuat dari canvas natural 12oz yang belum diputihkan — warna krem alami kainnya adalah bagian dari estetika. Sablon motif kaset di satu sisi menggunakan tinta water-based yang tahan lama dan ramah lingkungan. Handle panjang 65cm memungkinkan tote ini disandang di bahu. Kapasitas dalam yang luas (38x42cm) cukup untuk membawa laptop, buku, dan semua perbekalan harian.',
+        sizes: ['One Size'],
+        material: '100% Cotton Canvas Natural 12oz.',
+        weight: '280g',
+        care: ['Cuci tangan dengan deterjen lembut', 'Jemur terbalik', 'Setrika suhu rendah bila perlu'],
+        stock: 88,
+        rating: 4.3,
+        reviewCount: 46,
+    },
+    {
+        id: 11,
+        name: 'Kemeja Flannel Grunge',
+        tag: 'Tops',
+        price: 410000,
+        badge: null,
+        img: 'https://images.unsplash.com/photo-1577578948325-47f515220715?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1577578948325-47f515220715?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1610886886310-be2828d6afd5?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Flannel brushed. Warna earth tone khas 90an.',
+        longDesc: 'Kemeja Flannel Grunge mengambil inspirasi langsung dari scene musik alternatif 90an yang memadukan kenyamanan dengan ketidakpedulian yang terencana. Dibuat dari flannel brushed 200gsm yang lembut di kulit dan hangat tanpa bikin gerah. Pola tartan earth tone — kombinasi terracotta, olive, dan cream — adalah interpretasi RELIK atas warna-warna yang mendominasi jalanan dekade itu.',
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        material: '100% Cotton Flannel Brushed 200gsm.',
+        weight: '450g',
+        care: ['Cuci mesin dingin, terbalik', 'Setrika suhu sedang', 'Jangan dry clean'],
+        stock: 33,
+        rating: 4.6,
+        reviewCount: 72,
+    },
+    {
+        id: 12,
+        name: 'Windbreaker Relik 94',
+        tag: 'Outerwear',
+        price: 870000,
+        badge: 'TERLARIS',
+        img: 'https://images.unsplash.com/photo-1630083423959-81a0f39bac2e?w=600&h=720&fit=crop&auto=format',
+        imgs: [
+            'https://images.unsplash.com/photo-1630083423959-81a0f39bac2e?w=800&h=960&fit=crop&auto=format',
+            'https://images.unsplash.com/photo-1630083431838-d00a8c7e8c65?w=800&h=960&fit=crop&auto=format',
+        ],
+        desc: 'Nylon taffeta ringan. Packable. Warna retro gradient.',
+        longDesc: 'Windbreaker Relik 94 adalah perpaduan antara fungsionalitas dan estetika retro yang jarang dicapai dengan sempurna. Material nylon taffeta 40D yang digunakan sangat ringan namun efektif menahan angin dan gerimis ringan. Yang paling istimewa adalah colorway gradient tiga warna — dari terracotta di bahu menuju olive di badan hingga cream di hem — yang terinspirasi dari kaset-kaset warna-warni era 90an. Bisa dipack ke dalam saku sendiri.',
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        material: '100% Nylon Taffeta 40D with DWR coating.',
+        weight: '320g',
+        care: ['Cuci mesin dingin dengan net bag', 'Tumble dry suhu rendah untuk mengaktifkan kembali DWR', 'Jangan setrika'],
+        stock: 14,
+        rating: 4.8,
+        reviewCount: 98,
+    },
+]
+
+export const REVIEWS: Record<number, { id: number; name: string; avatar: string; rating: number; date: string; comment: string; verified: boolean }[]> = {
+    1: [
+        { id: 1, name: 'Rizal F.', avatar: 'RF', rating: 5, date: '12 Jul 2024', comment: 'Kualitasnya jauh melebihi ekspektasi. Patch bordir di punggung detail banget, beneran kayak handmade. Ukuran M pas buat badan 170cm 62kg.', verified: true },
+        { id: 2, name: 'Dinda P.', avatar: 'DP', rating: 5, date: '3 Jul 2024', comment: 'Udah jadi favorit. Sering dapet pujian tiap kali dipakai. Material dalemnya hangat tapi ga bikin gerah. Worth every rupiah!', verified: true },
+        { id: 3, name: 'Hendra S.', avatar: 'HS', rating: 4, date: '28 Jun 2024', comment: 'Bagus banget, cuma zipper agak seret di awal. Setelah beberapa kali pakai udah normal. Overall puas.', verified: true },
+        { id: 4, name: 'Mira A.', avatar: 'MA', rating: 5, date: '15 Jun 2024', comment: 'Limited edition yang beneran worth it. Packaging juga keren, datengnya dalam box khusus RELIK.', verified: false },
+    ],
+    2: [
+        { id: 1, name: 'Bagas K.', avatar: 'BK', rating: 5, date: '20 Jul 2024', comment: 'Sablonannya detail, grafis kasetnya cakep. Udah dicuci 10x masih bagus warnanya.', verified: true },
+        { id: 2, name: 'Nanda R.', avatar: 'NR', rating: 4, date: '10 Jul 2024', comment: 'Material katunnya enak, adem. Ukuran agak oversized tapi justru cocok buat styling 90an.', verified: true },
+        { id: 3, name: 'Tiara M.', avatar: 'TM', rating: 5, date: '1 Jul 2024', comment: 'Langsung beli dua warna. Favorit banget untuk daily wear.', verified: false },
+    ],
+    5: [
+        { id: 1, name: 'Kevin L.', avatar: 'KL', rating: 5, date: '18 Jul 2024', comment: 'Ini hoodie paling tebal dan enak yang pernah aku beli. Logo bordir di punggung gede banget, keren.', verified: true },
+        { id: 2, name: 'Putri S.', avatar: 'PS', rating: 5, date: '8 Jul 2024', comment: 'Hangat banget, sempurna untuk musim hujan. Warna tidak luntur setelah beberapa kali cuci.', verified: true },
+        { id: 3, name: 'Aldi M.', avatar: 'AM', rating: 5, date: '30 Jun 2024', comment: '380gsm beneran berasa beda. Ini bukan hoodie murahan. Recommended banget!', verified: true },
+    ],
+    7: [
+        { id: 1, name: 'Yoga P.', avatar: 'YP', rating: 5, date: '5 Jul 2024', comment: 'Piece of art. Nomor seri di label dalem itu detil yang bikin excited. Kulit asli, beneran premium.', verified: true },
+        { id: 2, name: 'Salsa D.', avatar: 'SD', rating: 5, date: '2 Jul 2024', comment: 'Langka banget, udah sold out di size lain. Untung kebagian size M. Worth every penny!', verified: true },
+    ],
+}
+
+export function getReviews(productId: number) {
+    return REVIEWS[productId] ?? [
+        { id: 1, name: 'Arif W.', avatar: 'AW', rating: 5, date: '15 Jul 2024', comment: 'Produk bagus, sesuai deskripsi. Pengiriman cepat dan aman.', verified: true },
+        { id: 2, name: 'Sari N.', avatar: 'SN', rating: 4, date: '8 Jul 2024', comment: 'Kualitas oke, material nyaman dipakai harian. Akan beli lagi.', verified: false },
+    ]
+}
+
+export function fmt(n: number) {
+    return 'Rp ' + n.toLocaleString('id-ID')
+}
