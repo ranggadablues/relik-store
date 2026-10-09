@@ -2,10 +2,10 @@ import { useState } from 'react'
 import type { NavFn } from '@/types/page'
 
 const PRODUCTS = [
-  { id: 1, name: 'Bomber Archive 94',   tag: 'OUTERWEAR', price: 'Rp 890.000', img: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=720&fit=crop&auto=format', badge: 'TERLARIS' },
-  { id: 2, name: 'Kaos Tape Side B',    tag: 'TOPS',      price: 'Rp 320.000', img: 'https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=600&h=720&fit=crop&auto=format', badge: null },
-  { id: 3, name: 'Jaket Denim Rewind',  tag: 'OUTERWEAR', price: 'Rp 750.000', img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&h=720&fit=crop&auto=format', badge: 'NEW' },
-  { id: 4, name: 'Varsity Jacket Kasur',tag: 'OUTERWEAR', price: 'Rp 1.100.000', img: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?w=600&h=720&fit=crop&auto=format', badge: 'LIMITED' },
+  { id: 1, name: 'Bomber Archive 94', tag: 'OUTERWEAR', price: 'Rp 890.000', img: 'https://images.unsplash.com/photo-1538751252895-baf363358ff7?w=600&h=720&fit=crop&auto=format', badge: 'TERLARIS' },
+  { id: 2, name: 'Kaos Tape Side B', tag: 'TOPS', price: 'Rp 320.000', img: 'https://images.unsplash.com/photo-1612739980319-3d70ac237feb?w=600&h=720&fit=crop&auto=format', badge: null },
+  { id: 3, name: 'Jaket Denim Rewind', tag: 'OUTERWEAR', price: 'Rp 750.000', img: 'https://images.unsplash.com/photo-1579531936377-b29525a21d63?w=600&h=720&fit=crop&auto=format', badge: 'NEW' },
+  { id: 4, name: 'Varsity Jacket Kasur', tag: 'OUTERWEAR', price: 'Rp 1.100.000', img: 'https://images.unsplash.com/photo-1586583903558-bf4ae02b9f29?w=600&h=720&fit=crop&auto=format', badge: 'LIMITED' },
 ]
 
 
@@ -57,7 +57,7 @@ export default function HomePage({ navigate }: { navigate: NavFn }) {
           {/* CENTER — hero image */}
           <div className="relative overflow-hidden" style={{ minHeight: 520, background: 'var(--muted)' }}>
             <img
-              src="https://images.unsplash.com/photo-1627326275129-4e8863100641?w=900&h=1100&fit=crop&auto=format"
+              src="https://images.unsplash.com/photo-1538751252895-baf363358ff7?w=900&h=1100&fit=crop&auto=format"
               alt="Gaya streetwear 90an"
               className="w-full h-full object-cover object-top"
               style={{ filter: 'sepia(25%) saturate(80%) contrast(1.08)', minHeight: 520 }}
@@ -79,7 +79,7 @@ export default function HomePage({ navigate }: { navigate: NavFn }) {
             {/* New drop alert */}
             <div className="border-b-2 border-[var(--foreground)] px-6 py-5" style={{ background: 'var(--primary)' }}>
               <p className="font-mono text-xs mb-1" style={{ color: 'rgba(245,237,217,0.7)', letterSpacing: '0.18em' }}>// NEW DROP</p>
-              <p className="font-display text-2xl leading-tight" style={{ color: '#F5EDD9' }}>BOMBER<br/>ARCHIVE 94</p>
+              <p className="font-display text-2xl leading-tight" style={{ color: '#F5EDD9' }}>BOMBER<br />ARCHIVE 94</p>
               <p className="font-condensed text-base mt-2" style={{ color: 'rgba(245,237,217,0.8)' }}>Rp 890.000</p>
               <button
                 onClick={() => navigate('product', 1)}
@@ -99,7 +99,7 @@ export default function HomePage({ navigate }: { navigate: NavFn }) {
                   <p className="font-mono text-xs" style={{ color: 'var(--muted-foreground)', letterSpacing: '0.1em' }}>SEP</p>
                 </div>
                 <div>
-                  <p className="font-condensed font-700 uppercase text-sm leading-tight" style={{ color: 'var(--foreground)' }}>POP-UP JAKARTA<br/>Senayan City</p>
+                  <p className="font-condensed font-700 uppercase text-sm leading-tight" style={{ color: 'var(--foreground)' }}>POP-UP JAKARTA<br />Senayan City</p>
                   <p className="font-mono text-xs mt-1.5" style={{ color: 'var(--muted-foreground)' }}>12.00 – 20.00 WIB</p>
                 </div>
               </div>
@@ -151,7 +151,7 @@ export default function HomePage({ navigate }: { navigate: NavFn }) {
             {/* Text */}
             <div className="p-8 md:p-10 border-b-2 md:border-b-0 md:border-r-2 border-[var(--foreground)]">
               <h2 className="font-display mb-5" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 4rem)', lineHeight: 0.92, color: 'var(--foreground)' }}>
-                BUKAN<br/>SEKADAR<br/>BRAND.
+                BUKAN<br />SEKADAR<br />BRAND.
               </h2>
               <p className="font-body text-sm leading-relaxed mb-4" style={{ color: 'var(--muted-foreground)', maxWidth: 380 }}>
                 Kami adalah arsip dari era yang membentuk kita — ketika musik masih diputar dari kaset, ketika pakaian punya karakter, ketika jalanan adalah tempat bercerita.
@@ -175,7 +175,7 @@ export default function HomePage({ navigate }: { navigate: NavFn }) {
             {/* Image */}
             <div className="relative overflow-hidden" style={{ background: 'var(--muted)', minHeight: 380 }}>
               <img
-                src="https://images.unsplash.com/photo-1634133118553-1e6e18299886?w=800&h=900&fit=crop&auto=format"
+                src="https://images.unsplash.com/photo-1612739980319-3d70ac237feb?w=800&h=900&fit=crop&auto=format"
                 alt="Komunitas streetwear vintage"
                 className="w-full h-full object-cover"
                 style={{ filter: 'sepia(20%) saturate(85%) contrast(1.05)', minHeight: 380 }}
@@ -277,7 +277,7 @@ export default function HomePage({ navigate }: { navigate: NavFn }) {
           <div className="px-10 py-14">
             <p className="font-mono text-xs uppercase mb-5" style={{ color: 'var(--accent)', letterSpacing: '0.22em' }}>// MANIFESTO</p>
             <blockquote className="font-display leading-none mb-8" style={{ fontSize: 'clamp(2.2rem, 4vw, 3.8rem)', color: '#F5EDD9', lineHeight: 0.9 }}>
-              "KAMI ADALAH<br/>ARSIP DARI<br/>ERA YANG<br/>MEMBENTUK<br/>KITA."
+              "KAMI ADALAH<br />ARSIP DARI<br />ERA YANG<br />MEMBENTUK<br />KITA."
             </blockquote>
             <p className="font-body text-sm leading-relaxed" style={{ color: 'rgba(245,237,217,0.55)', maxWidth: 340 }}>
               Ketika musik masih diputar dari kaset, ketika pakaian punya karakter, ketika jalanan adalah tempat bercerita.
@@ -292,7 +292,7 @@ export default function HomePage({ navigate }: { navigate: NavFn }) {
             <div>
               <p className="font-mono text-xs uppercase mb-4" style={{ color: 'var(--accent)', letterSpacing: '0.22em' }}>// BERGABUNG</p>
               <h3 className="font-display mb-4" style={{ fontSize: 'clamp(2rem, 3.5vw, 3rem)', color: '#F5EDD9', lineHeight: 0.92 }}>
-                JADILAH<br/>BAGIAN<br/>DARI ARSIP.
+                JADILAH<br />BAGIAN<br />DARI ARSIP.
               </h3>
               <p className="font-body text-sm leading-relaxed" style={{ color: 'rgba(245,237,217,0.55)', maxWidth: 280 }}>
                 Daftar sebagai member RELIK dan dapatkan akses awal ke koleksi terbatas.
