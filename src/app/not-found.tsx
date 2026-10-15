@@ -1,16 +1,14 @@
-// "use client"
-
 import { Metadata } from 'next';
-import NotFound from '@/components/notfound';
+import ClientNotFoundPage from '@/app/client-not-found';
 
 export const metadata: Metadata = {
-    title: "Relik - Not Found",
-    description: "Authentic vintage band tees from the golden era of rock, grunge, and alternative",
+    title: "Relik - Halaman tidak ditemukan!",
+    description: "Halaman tidak ditemukan!",
 };
 
 const NotFoundPage = () => {
     return (
-        <NotFound />
+        <ClientNotFoundPage />
     );
 }
 export default NotFoundPage

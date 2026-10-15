@@ -59,15 +59,17 @@ export default function GoogleSignIn() {
                             const googleUser = await userInfoResponse.json();
 
                             // Send to your backend
-                            const res = await api.post<GoogleAuthResponse>("/api/auth/google", {
+                            const res = await api.post<{ success: boolean; user: { id: string; email: string; name: string; picture?: string } }>("/api/auth/google", {
                                 access_token: tokenResponse.access_token,
                                 user_info: googleUser,
                             });
 
-                            setUser(res.user);
+                            if (res.user) {
+                                setUser(res.user);
+                            }
                             router.push("/");
-                        } catch (err) {
-                            console.error("Google login failed", err);
+                        } catch (err: any) {
+                            console.error("Google login failed", err?.message ?? err);
                         }
                     }
                 },

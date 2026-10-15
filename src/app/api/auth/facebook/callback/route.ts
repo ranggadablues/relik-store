@@ -2,7 +2,7 @@ import { serverApi } from "@/lib/api/server";
 import { cookiesHelper } from "@/lib/helper/cookies";
 import { NextResponse } from "next/server";
 
-export const runtime = "nodejs"; // optional if you want relative redirects
+export const runtime = "nodejs";
 
 export async function GET(request: Request) {
     try {
@@ -18,17 +18,30 @@ export async function GET(request: Request) {
             code,
         });
 
-        // Save token (e.g., cookie/localStorage)
+        // Save tokens to httpOnly cookies
         const { accessToken, refreshToken } = response.data;
-        await cookiesHelper.setCookie("access_token", accessToken)
-        await cookiesHelper.setCookie("refresh_token", refreshToken)
+        await cookiesHelper.setCookie("access_token", accessToken);
+        await cookiesHelper.setCookie("refresh_token", refreshToken);
 
-        // Send data back to opener window & close popup
+        // Fetch user profile using the new token
+        let user = null;
+        try {
+            const meResponse = await serverApi.get<any>("/users/me", {
+                headers: {
+                    Cookie: `access_token=${accessToken}`,
+                },
+            });
+            user = meResponse.data ?? meResponse;
+        } catch (e) {
+            console.warn("Could not fetch user profile after Facebook login:", e);
+        }
+
+        // Send user back to opener window & close popup
         return new NextResponse(`
             <script>
                 window.opener.postMessage({
-                source: "facebook-auth",
-                user: ${JSON.stringify(response.data)},
+                    source: "facebook-auth",
+                    user: ${JSON.stringify(user)},
                 }, window.location.origin);
                 window.close();
             </script>
@@ -37,6 +50,14 @@ export async function GET(request: Request) {
         });
     } catch (err: any) {
         console.error("Callback error:", err?.response?.data || err?.message || err);
-        return NextResponse.json({ error: err.message }, { status: 500 });
+        return new NextResponse(`
+            <script>
+                alert("Facebook login failed: " + ${JSON.stringify(err?.message ?? "Unknown error")});
+                window.close();
+            </script>
+        `, {
+            headers: { "Content-Type": "text/html" },
+            status: 500,
+        });
     }
 }
