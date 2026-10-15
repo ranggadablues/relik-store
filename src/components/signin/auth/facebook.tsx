@@ -40,10 +40,12 @@ export default function FacebookLoginButton() {
       if (event.data?.source === "facebook-auth") {
         const { user } = event.data;
 
-        // Store to Zustand or cookies
-        setUser(user);
+        // Store to Zustand
+        if (user) {
+          setUser(user);
+        }
 
-        router.refresh();
+        router.push("/");
       }
     };
 

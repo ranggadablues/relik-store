@@ -19,15 +19,11 @@ export async function POST(req: Request) {
     let response;
 
     if (access_token && user_info) {
-        // New flow: send access_token and user_info
-        console.log("Using access_token flow with user_info:", user_info);
         response = await serverApi.post<any>("/users/googleauth", {
             access_token,
             user_info,
         });
     } else {
-        // Old flow: send id_token
-        console.log("Using id_token flow");
         response = await serverApi.post<any>("/users/googleauth", {
             id_token,
         });
@@ -37,6 +33,19 @@ export async function POST(req: Request) {
     await cookiesHelper.setCookie("access_token", accessToken);
     await cookiesHelper.setCookie("refresh_token", refreshToken);
 
-    // 3️⃣ Return response
-    return NextResponse.json({ success: true });
+    // 3️⃣ Fetch user profile using the new token
+    let user = null;
+    try {
+        const meResponse = await serverApi.get<any>("/users/me", {
+            headers: {
+                Cookie: `access_token=${accessToken}`,
+            },
+        });
+        user = meResponse.data ?? meResponse;
+    } catch (e) {
+        console.warn("Could not fetch user profile after Google login:", e);
+    }
+
+    // 4️⃣ Return user so the client can hydrate authStore
+    return NextResponse.json({ success: true, user });
 }
