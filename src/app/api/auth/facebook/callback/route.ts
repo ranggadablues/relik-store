@@ -8,6 +8,23 @@ export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
         const code = searchParams.get("code");
+        const state = searchParams.get("state");
+        const savedState = await cookiesHelper.getCookie("fb_oauth_state");
+
+        // Clean state cookie
+        await cookiesHelper.deleteCookie("fb_oauth_state");
+
+        if (!savedState || !state || state !== savedState) {
+            return new NextResponse(`
+                <script>
+                    alert("Facebook authentication failed: Invalid OAuth state.");
+                    window.close();
+                </script>
+            `, {
+                headers: { "Content-Type": "text/html" },
+                status: 400,
+            });
+        }
 
         if (!code) {
             return NextResponse.json({ error: "Missing code" }, { status: 400 });
@@ -49,10 +66,18 @@ export async function GET(request: Request) {
             headers: { "Content-Type": "text/html" }
         });
     } catch (err: any) {
-        console.error("Callback error:", err?.response?.data || err?.message || err);
+        const errorMsg = err?.response?.data?.message || err?.message || "Unknown error";
+        console.error("Facebook Callback error:", errorMsg);
         return new NextResponse(`
             <script>
-                alert("Facebook login failed: " + ${JSON.stringify(err?.message ?? "Unknown error")});
+                if (window.opener) {
+                    window.opener.postMessage({
+                        source: "facebook-auth",
+                        error: ${JSON.stringify(errorMsg)},
+                    }, window.location.origin);
+                } else {
+                    alert("Facebook login failed: " + ${JSON.stringify(errorMsg)});
+                }
                 window.close();
             </script>
         `, {

@@ -28,8 +28,6 @@ async function request<TResponse, TBody = unknown>(
         body: data ? JSON.stringify(data) : undefined,
         cache: "no-store",
     });
-    console.log("res =>", res)
-
     if (!res.ok) {
         const text = await res.text();
         throw new Error(`API ${res.status}: ${text}`);

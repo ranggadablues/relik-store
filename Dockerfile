@@ -4,7 +4,7 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm install ci --ignore-scripts
+RUN npm ci --ignore-scripts
 
 # ===============================
 # 2. Build the Next.js project
@@ -13,6 +13,8 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # ===============================
@@ -22,30 +24,26 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
 # Create non-root user
 RUN addgroup -S app && adduser -S app -G app
 
-# Copy required files
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/next.config.ts ./
+# Copy public static files
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
 
-# Copy env if exists (optional)
-# COPY .env* ./
-
-# App-owned writable dirs
-RUN mkdir -p /app/data /app/public/products \
+# Set permission for prerender cache / data folder
+RUN mkdir -p /app/.next /app/data /app/public/products \
  && chown -R app:app /app
 
-# Create runtime volume directory
-# RUN mkdir -p /app/data \
-#     && mkdir -p /app/public/products
+# Copy standalone output from builder
+COPY --from=builder --chown=app:app /app/.next/standalone ./
+COPY --from=builder --chown=app:app /app/.next/static ./.next/static
 
 USER app
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]

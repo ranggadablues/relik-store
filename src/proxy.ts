@@ -5,10 +5,13 @@ export function proxy(req: NextRequest) {
     const session = req.cookies.get("access_token");
     const { pathname } = req.nextUrl;
 
-    console.log(`🔥 Middleware: ${pathname} | Session: ${session ? "Active" : "None"}`);
-
     // Define auth routes that should be inaccessible when logged in
-    const isAuthRoute = pathname.startsWith("/signin");
+    const isAuthRoute =
+        pathname.startsWith("/masuk") ||
+        pathname.startsWith("/daftar") ||
+        pathname.startsWith("/login") ||
+        pathname.startsWith("/buatakun") ||
+        pathname.startsWith("/signin");
 
     // Redirect authenticated users away from auth pages to home
     if (session && isAuthRoute) {

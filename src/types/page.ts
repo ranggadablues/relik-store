@@ -1,14 +1,16 @@
-export type Page = 'home' | 'login' | 'register' | 'event' | 'catalog' | 'product' | 'forgot-password'
+export type Page = 'home' | 'login' | 'register' | 'event' | 'catalog' | 'product' | 'forgot-password' | 'activation-success' | 'activation-expired'
 export type NavFn = (page: Page, productId?: number) => void
 
 export const ROUTE_MAP: Record<Page, string> = {
   home: '/',
   catalog: '/katalog',
   event: '/event',
-  login: '/daftar',
-  register: '/buatakun',
+  login: '/masuk',
+  register: '/daftar',
   product: '/produk',
   'forgot-password': '/lupapassword',
+  'activation-success': '/aktivasi/success',
+  'activation-expired': '/aktivasi/expired',
 }
 
 export function getRoutePath(page: Page, productId?: number): string {
