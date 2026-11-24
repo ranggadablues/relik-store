@@ -43,96 +43,163 @@ interface SocialAuthProps {
   onSuccess?: () => void;
 }
 
+let cachedGoogleClientId: string | null = null;
+let googleClientIdRequest: Promise<string> | null = null;
+
+async function resolveGoogleClientId(): Promise<string> {
+  const buildTimeClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID?.trim();
+  if (buildTimeClientId) {
+    cachedGoogleClientId = buildTimeClientId;
+    return buildTimeClientId;
+  }
+
+  if (cachedGoogleClientId) {
+    return cachedGoogleClientId;
+  }
+
+  if (!googleClientIdRequest) {
+    googleClientIdRequest = fetch("/api/auth/google/config", { cache: "no-store" })
+      .then(async (res) => {
+        if (!res.ok) return "";
+        const data = (await res.json()) as { clientId?: string };
+        return data.clientId?.trim() || "";
+      })
+      .catch(() => "")
+      .then((clientId) => {
+        if (clientId) {
+          cachedGoogleClientId = clientId;
+        }
+        return clientId;
+      })
+      .finally(() => {
+        googleClientIdRequest = null;
+      });
+  }
+
+  return googleClientIdRequest;
+}
+
 export function GoogleAuthButton({ layout = "vertical", onSuccess }: SocialAuthProps) {
   const router = useRouter();
   const setUser = useAuthStore((s) => s.setUser);
   const tokenClientRef = useRef<any>(null);
+  const onSuccessRef = useRef(onSuccess);
+  onSuccessRef.current = onSuccess;
   const [loading, setLoading] = useState(false);
+  const [configMissing, setConfigMissing] = useState(false);
 
   useEffect(() => {
-    let script = document.getElementById("google-gsi-script") as HTMLScriptElement | null;
-    const initClient = () => {
-      if (!globalThis.google?.accounts?.oauth2) return;
-      tokenClientRef.current = globalThis.google.accounts.oauth2.initTokenClient({
-        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
-        scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
-        callback: async (tokenResponse: any) => {
-          if (tokenResponse.error) {
-            setLoading(false);
-            console.error("Google OAuth error:", tokenResponse);
-            toast.error("Google authentication failed.");
-            return;
-          }
+    let cancelled = false;
+    let resolvedClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID?.trim() || cachedGoogleClientId || "";
 
-          if (tokenResponse.access_token) {
-            try {
-              const userInfoResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-                headers: {
-                  Authorization: `Bearer ${tokenResponse.access_token}`,
-                },
-              });
+    const tryInitClient = () => {
+      if (cancelled || tokenClientRef.current) return;
+      if (!resolvedClientId || !globalThis.google?.accounts?.oauth2) return;
 
-              if (!userInfoResponse.ok) {
-                throw new Error("Failed to fetch Google profile");
+      try {
+        tokenClientRef.current = globalThis.google.accounts.oauth2.initTokenClient({
+          client_id: resolvedClientId,
+          scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+          callback: async (tokenResponse: any) => {
+            if (tokenResponse.error) {
+              setLoading(false);
+              console.error("Google OAuth error:", tokenResponse);
+              toast.error("Google authentication failed.");
+              return;
+            }
+
+            if (tokenResponse.access_token) {
+              try {
+                const userInfoResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+                  headers: {
+                    Authorization: `Bearer ${tokenResponse.access_token}`,
+                  },
+                });
+
+                if (!userInfoResponse.ok) {
+                  throw new Error("Failed to fetch Google profile");
+                }
+
+                const googleUser = await userInfoResponse.json();
+
+                const res = await api.post<{ success: boolean; user: any }>("/api/auth/google", {
+                  access_token: tokenResponse.access_token,
+                  user_info: googleUser,
+                });
+
+                if (res.user) {
+                  setUser(res.user);
+                }
+
+                toast.success("Login Google berhasil!");
+                if (onSuccessRef.current) {
+                  onSuccessRef.current();
+                } else {
+                  router.push("/");
+                }
+              } catch (err: any) {
+                console.error("Google login failed:", err);
+                toast.error(err?.message || "Google authentication failed. Please try again.");
+              } finally {
+                setLoading(false);
               }
-
-              const googleUser = await userInfoResponse.json();
-
-              const res = await api.post<{ success: boolean; user: any }>("/api/auth/google", {
-                access_token: tokenResponse.access_token,
-                user_info: googleUser,
-              });
-
-              if (res.user) {
-                setUser(res.user);
-              }
-
-              toast.success("Login Google berhasil!");
-              if (onSuccess) {
-                onSuccess();
-              } else {
-                router.push("/");
-              }
-            } catch (err: any) {
-              console.error("Google login failed:", err);
-              toast.error(err?.message || "Google authentication failed. Please try again.");
-            } finally {
+            } else {
               setLoading(false);
             }
-          } else {
-            setLoading(false);
-          }
-        },
-      });
+          },
+        });
+      } catch (err) {
+        console.error("Failed to initialize Google OAuth client:", err);
+      }
     };
 
+    let script = document.getElementById("google-gsi-script") as HTMLScriptElement | null;
     if (!script) {
       script = document.createElement("script");
       script.id = "google-gsi-script";
       script.src = "https://accounts.google.com/gsi/client";
       script.async = true;
       script.defer = true;
-      script.onload = initClient;
       document.body.appendChild(script);
-    } else if (globalThis.google?.accounts?.oauth2) {
-      initClient();
+    }
+    script.addEventListener("load", tryInitClient);
+
+    if (resolvedClientId) {
+      tryInitClient();
+    } else {
+      resolveGoogleClientId().then((clientId) => {
+        if (cancelled) return;
+        if (!clientId) {
+          setConfigMissing(true);
+          console.warn("Google OAuth client_id is not configured (set NEXT_PUBLIC_GOOGLE_CLIENT_ID or GOOGLE_CLIENT_ID).");
+          return;
+        }
+        resolvedClientId = clientId;
+        setConfigMissing(false);
+        tryInitClient();
+      });
     }
 
     return () => {
-      // Keep script cached in DOM
+      cancelled = true;
+      script?.removeEventListener("load", tryInitClient);
     };
-  }, [router, setUser, onSuccess]);
+  }, [router, setUser]);
 
   const handleLogin = async () => {
     if (loading) return;
+    if (configMissing) {
+      toast.error("Google login belum dikonfigurasi.");
+      return;
+    }
     if (!tokenClientRef.current) {
       toast.info("Memuat Google client, silakan coba lagi...");
       return;
     }
 
     const skipped = await skipOAuthIfSessionActive(() => {
-      if (onSuccess) {
-        onSuccess();
+      if (onSuccessRef.current) {
+        onSuccessRef.current();
       } else {
         router.push("/");
       }

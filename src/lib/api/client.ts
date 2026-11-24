@@ -23,14 +23,9 @@ export function setTokens(tokens: { accessToken: string; refresh: string }) {
 }
 
 function getBaseUrl() {
-    // ✅ Client-only: browser → gateway
-    const base = process.env.NEXT_PUBLIC_API_URL;
-
-    if (!base) {
-        throw new Error("NEXT_PUBLIC_API_URL is not defined");
-    }
-
-    return base;
+    // ✅ Client-only: browser → gateway (fallback to same-origin when unset at build time)
+    const base = process.env.NEXT_PUBLIC_API_URL?.trim();
+    return base ? base.replace(/\/+$/, "") : "";
 }
 
 async function request<TResponse, TBody = unknown>(
